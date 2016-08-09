@@ -1,0 +1,8 @@
+* {
+ // border: 1px red dashed;
+}
+
+
+p:first-letter {
+  text-transform: capitalize;
+}
