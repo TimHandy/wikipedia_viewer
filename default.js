@@ -1,37 +1,38 @@
-// TODO: User Story: I can search Wikipedia entries in a search box and see the resulting Wikipedia entries.
+function sendRequest() {
+	document.getElementById("search-results-div").innerHTML = "";
+	var html = "https://crossorigin.me/https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=";	// Question: Do I have to keep using CORS crossorigin.me, or am I doing something wrong?
+	var searchTerm = document.getElementById("search").value.split(" ").join("+");
+	console.log(searchTerm);
+	var apiString = html + searchTerm;
+	//console.log(apiString);
+	var jsonResults = $.getJSON(apiString, function(json) {
+		//console.log(jsonResults);
+		for (var i = 0; i < jsonResults.responseJSON.query.search.length; i++) {
+			var resultTitle = jsonResults.responseJSON.query.search[i].title;
+			//console.log(resultTitle);
+			var resultSnippet = jsonResults.responseJSON.query.search[i].snippet;
+			var resultUrl = "https://en.wikipedia.org/wiki/" + resultTitle.split(" ").join("_");
+			//console.log(resultUrl);
+			// console.log(resultSnippet);
+			$("#search-results-div:last-child").append("<a href='" + resultUrl + "' target='_blank'>" + "<h3>" + resultTitle + "</h3></a>");
+			$("#search-results-div:last-child").append("<p>" + resultSnippet + "..." + "</p>");
+		}
+	});
+}
 
-// TODO: User Story: I can click a button to see a random Wikipedia entry.
-
-
-// take the user input and assign to a var
-var html = "https://crossorigin.me/https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=";
- 
 $(document).ready(function() {
-    $("#result-button").click(function() {
-        var searchTerm = document.getElementById("search").value;
-        console.log(searchTerm);
-        var apiString = html + searchTerm; // TODO: take care of multi-word strings by adding '+' between the words.
-        console.log(apiString);
-        var jsonResults = $.getJSON(apiString, function(json) {
-            console.log(jsonResults);
-            for (var i = 0; i < 10; i++) {
-                var resultTitle = jsonResults.responseJSON.query.search[i].title;
-                console.log(resultTitle);
-                var resultSnippet = jsonResults.responseJSON.query.search[i].snippet;
-                var resultUrl = "https://en.wikipedia.org/wiki/" + resultTitle.split(" ").join("_");
-                console.log(resultUrl)
-                    // console.log(resultSnippet);
-                $("#search-results-div:last-child").append("<a href='" + resultUrl + "' target='_blank'>" + "<h3>" + resultTitle + "</h3></a>");
-                $("#search-results-div:last-child").append("<p>" + resultSnippet + "</p>");
-            }
-        });
-    });
+	// STORY: I can search Wikipedia entries in a search box and see the resulting Wikipedia entries.
+    $("#result-button").click(sendRequest);
+	// Event handler for the Enter key press
+	$("#search").keypress(function(event) {		// watch for a keypress in the search box
+		if (event.keyCode == 13) {		// specifically, watch for the Enter key
+			$("#result-button").click();	// click the result button... which has it's own function sendRequest() in the click handler above.
+		}
+	});
 });
 
-// object, responseJSON, query, search, 10 objects, title, snippet
 
-
-
+// RANDOM NOTES
 
 //var searchResults = [];
 //	$.each( data, function( key, val ) {
@@ -42,21 +43,12 @@ $(document).ready(function() {
 // call the api and retrieve JSON
 // assign JSON to a var
 
-// loop through
-
-// replace HTML with the results
-
 
 //https://www.freecodecamp.com/challenges/get-json-with-the-jquery-getjson-method
 
 
-
-
-
 // Demo string
 // https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=Albert+Einstein
-
-
 
 
 // https://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&section=0&page=Jimi_Hendrix
