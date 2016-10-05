@@ -2,7 +2,30 @@
  // border: 1px red dashed;
 }
 
+body {
+  background: #f1db72
+}
 
 p:first-letter {
   text-transform: capitalize;
+}
+
+.random, .search {
+  text-align: center;
+}
+
+.random {
+  margin: 50px;
+}
+
+.random-button {
+  margin-top: 50px;
+}
+
+.search {
+  margin: 30px;
+}
+
+#search-results-div {
+
 }

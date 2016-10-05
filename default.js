@@ -26,7 +26,7 @@ $(document).ready(function() {
 	// Event handler for the Enter key press
 	$("#search").keypress(function(event) {		// watch for a keypress in the search box
 		if (event.keyCode == 13) {		// specifically, watch for the Enter key
-			$("#result-button").click();	// click the result button... which has it's own function sendRequest() in the click handler above.
+			sendRequest();	// click the result button... which has it's own function sendRequest() in the click handler above.
 		}
 	});
 });
